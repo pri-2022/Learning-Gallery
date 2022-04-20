@@ -56,7 +56,45 @@
 
 ### 1）嵌套规则
 
+-  Sass 允许将一套 CSS 样式嵌套进另一套样式中，内层的样式将它外层的选择器作为父选择器 
 
+  ```javascript
+  #main {
+    width: 97%;
+    
+    p, div {
+      font-size: 2em;
+      a { font-weight: bold; }
+    }
+  
+    pre { font-size: 3em; }
+  }
+  
+  ---编译为
+  
+  #main {
+    width: 97%; 
+  }
+  #main p, #main div {
+      font-size: 2em; 
+  }
+  #main p a, #main div a {
+      font-weight: bold; 
+  }
+  #main pre {
+      font-size: 3em; 
+  }
+  ```
+
+### 2）父选择器 `&`
+
+-  当给某个元素设定 `hover` 样式时，或者当 `body` 元素有某个 classname 时，可以用 `&` 代表嵌套规则外层的父选择器。 
+
+  ```javascript
+  
+  ```
+
+  
 
 
 
