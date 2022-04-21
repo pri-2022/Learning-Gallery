@@ -138,7 +138,29 @@
 ### 4）占位符选择器 `%foo`
 
 - 与常用的 id 与 class 选择器写法相似，只是 `#` 或 `.` 替换成了 `%`。
+
 - 必须通过 [@extend](https://www.sass.hk/docs/#t7-3) 指令调用
+
+  ```javascript
+  %color{
+      color:#fff
+  }
+  
+  div{
+      @extend:%color;
+      padding:10px;
+  }
+  
+  ---编译为
+  
+  // 不生成 %color 的代码
+  div{
+      color:#fff;
+      padding:10px;
+  }
+  ```
+
+  
 
 ## 3、注释 `/* */` 与 `//`
 
@@ -160,6 +182,20 @@
 ## 4、SassScript
 
 ### 1）变量 `$`
+
+#### （1）CSS 使用变量
+
+```javascript
+// 可用于任何选择器，范围相当于 body
+:root{
+    --color: #F00;
+}
+p{
+    color:var(--color);
+}
+```
+
+#### （2）Sass 使用变量
 
 - SassScript 最普遍的用法就是变量，变量以美元符号开头，赋值方法与 CSS 属性的写法一样。
 
@@ -187,6 +223,8 @@
   ```
 
 ### 2）数据类型
+
+- 支持七种数据类型：数字，字符串，颜色，布尔型，空值，数组list，maps
 
 #### （1）字符串 Strings
 
@@ -845,3 +883,15 @@ p {
     width: 240px; 
   }
   ```
+
+## 9、Readme
+
+1. 变量可以设置默认值。
+2. @import 导入文件，分音不生成 CSS 文件。
+3. @extend 继承所有属性，可以使用占位符选择器减少不必要的代码。
+4. @Mixin 定义可重复使用的样式，@include 调用。
+   1. 指定参数名以接收参数，则参数不需要指定顺序。
+   2. 参数可以设置默认值。
+5. 对比 @extend 与 @Mixin
+   1. 都可以实现样式复用；
+   2. @extend 生成的代码量更少；
