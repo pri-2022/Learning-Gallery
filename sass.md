@@ -1,3 +1,5 @@
+# 一、Sass
+
 ## 1、概述
 
 1. sass 从第三代开始，放弃了缩进式风格，完全向下兼容普通的 CSS 代码，这一代的 sass 被称为 scss 。
@@ -85,8 +87,8 @@
       font-size: 3em; 
   }
   ```
-
-### 2）父选择器 `&`
+  
+  ### 2）父选择器 `&`
 
 - 当给某个元素设定 `hover` 样式时，或者当 `body` 元素有某个 classname 时，可以用 `&` 代表嵌套规则外层的父选择器。 
 
@@ -160,7 +162,7 @@
   }
   ```
 
-  
+
 
 ## 3、注释 `/* */` 与 `//`
 
@@ -197,7 +199,15 @@ p{
 
 #### （2）Sass 使用变量
 
-- SassScript 最普遍的用法就是变量，变量以美元符号开头，赋值方法与 CSS 属性的写法一样。
+- 如果变量需要镶嵌在字符串之中，就必须需要写在#{}之中。
+
+  ```javascript
+  　$side : left;
+  
+  　.rounded {
+  　　　border-#{$side}-radius: 5px;
+  　}
+  ```
 
 - 变量支持块级作用域，嵌套规则内定义的变量只能在嵌套规则内使用（局部变量），不在嵌套规则内定义的变量则可在任何地方使用（全局变量）。将局部变量转换为全局变量可以添加 `!global` 声明。
 
@@ -678,9 +688,9 @@ p {
   @for $i from 1 through 3 {
     .item-#{$i} { width: 2em * $i; }
   }
-  
+
   ---编译为
-  
+
   .item-1 {
     width: 2em; }
   .item-2 {
@@ -696,9 +706,9 @@ p {
       background-image: url('/images/#{$animal}.png');
     }
   }
-  
+
   ---编译为
-  
+
   .puma-icon {
     background-image: url('/images/puma.png'); }
   .sea-slug-icon {
@@ -718,9 +728,9 @@ p {
       cursor: $cursor;
     }
   }
-  
+
   ---编译为
-  
+
   .puma-icon {
     background-image: url('/images/puma.png');
     border: 2px solid black;
@@ -737,9 +747,9 @@ p {
       font-size: $size;
     }
   }
-  
+
   ---编译为
-  
+
   h1 {
     font-size: 2em; }
   h2 {
@@ -755,15 +765,15 @@ p {
     .item-#{$i} { width: 2em * $i; }
     $i: $i - 2;
   }
-  
+
   ---编译为
-  
+
   .item-6 {
     width: 12em; }
-  
+
   .item-4 {
     width: 8em; }
-  
+
   .item-2 {
     width: 4em; }
   ```
@@ -789,9 +799,9 @@ p {
     padding: 4px;
     margin-top: 10px;
   }
-  
+
   ---编译为
-  
+
   .page-title {
     font-family: Arial;
     font-size: 20px;
@@ -812,9 +822,9 @@ p {
     }
   }
   p { @include sexy-border(blue, 1in); }
-  
+
   ---编译为
-  
+
   p {
     border-color: blue;
     border-width: 1in;
@@ -832,9 +842,9 @@ p {
   }
   p { @include sexy-border(blue); }
   h1 { @include sexy-border(blue, 2in); }
-  
+
   ---编译为
-  
+
   p {
     border-color: blue;
     border-width: 1in;
@@ -856,9 +866,9 @@ p {
   .shadows {
     @include box-shadow(0px 4px 5px #666, 2px 6px 10px #999);
   }
-  
+
   ---编译为
-  
+
   .shadowed {
     -moz-box-shadow: 0px 4px 5px #666, 2px 6px 10px #999;
     -webkit-box-shadow: 0px 4px 5px #666, 2px 6px 10px #999;
@@ -870,24 +880,44 @@ p {
   ```javascript
   $grid-width: 40px;
   $gutter-width: 10px;
-  
+
   @function grid-width($n) {
     @return $n * $grid-width + ($n - 1) * $gutter-width;
   }
-  
+
   #sidebar { width: grid-width(5); }
-  
+
   ---编译为
-  
+
   #sidebar {
     width: 240px; 
   }
   ```
+## 9、常见函数
 
-## 9、Readme
+|   范围   |              函数              |           含义           |
+| :------: | :----------------------------: | :----------------------: |
+|  color   |      lighten( red , %30 )      |           变亮           |
+|          |      darken( red , %30 )       |           变淡           |
+|  string  |      quote ( 字符串包裹 )      |        字符串包裹        |
+|          |   unquote ($string：“#ff0" )   |        去除字符串        |
+|   math   |           abs( -15 )           |         取绝对值         |
+|          |        max( 5,1,6,8,3)         |         取最大值         |
+|          |          ceil ( 5.8 )          |        取天花板值        |
+|          |           random（）           |      取0,1的随机数       |
+|   map    |           map-get()            |    根据键值获取value     |
+|          |          map-merge()           |     两个map合成一个      |
+|          |          map-values()          |      映射中的所有值      |
+|  number  |      length (3,4,5) // 3       |         计算长度         |
+|          |     index(a b c , c ) // 3     |          求下标          |
+| 自检函数 |        feature-exists()        |  当前版本是否存在某特性  |
+|          | variable-exists(变量名不加 $ ) | 当前作用域是否存在某变量 |
+|          |         mixin-exists()         |  检测某个mixin是否存在   |
 
-1. 变量可以设置默认值。
-2. @import 导入文件，分音不生成 CSS 文件。
+## 10、Readme
+
+1. 变量可以设置默认值，！default 语法。
+2. @import 导入文件，分音"_"不生成 CSS 文件。
 3. @extend 继承所有属性，可以使用占位符选择器减少不必要的代码。
 4. @Mixin 定义可重复使用的样式，@include 调用。
    1. 指定参数名以接收参数，则参数不需要指定顺序。
@@ -895,3 +925,194 @@ p {
 5. 对比 @extend 与 @Mixin
    1. 都可以实现样式复用；
    2. @extend 生成的代码量更少；
+# 二、Compass*
+## 1、概述
+- Sass本身只是一个编译器，Compass在它的基础上，封装了一系列有用的模块和模板，补充Sass的功能。它们之间的关系，有点像Javascript和jQuery。
+- Compass 从 2014 年开始不再维护，因此本小节只是选学模块，仅做了解即可。
+### 1）初始化
+1. 安装
+   ```javascript
+   npm install normallize.css --save
+   npm install node-sass sass-loader --save-dev
+   npm install compass-mixins --save-dev
+   ```
+2. 修改build/util.js
+   ```javascript
+   ...
+   exports.cssLoaders = function (options) {
+    ...
+    return {
+     ...
+     // 将sass和scss修改为如下
+     sass: generateLoaders('sass', { indentedSyntax: true, includePaths: [path.resolve(__dirname, '../node_modules/compass-mixins/lib')] }),
+     scss: generateLoaders('sass', { includePaths: [path.resolve(__dirname, '../node_modules/compass-mixins/lib')] }),
+     ...
+    }
+   }
+   ...
+   ```
+## 2、内置模块
+### 1）reset 模块
+- 通常，编写自己的样式之前，有必要[重置](http://meyerweb.com/eric/tools/css/reset/)浏览器的默认样式。
+  ```javascript
+  　@import "compass/reset";
+  ```
+### 2）CSS3 模块
+- 目前，[CSS3模块](http://compass-style.org/reference/compass/css3/)提供21种CSS3命令，主要处理兼容性问题。
+  - [动画](http://compass-style.org/reference/compass/css3/animation/) – 指定 CSS3 动画属性及其所有子属性。
+  - [外观](http://compass-style.org/reference/compass/css3/appearance/) – 指定 CSS3 外观属性。
+  - [背景剪辑](http://compass-style.org/reference/compass/css3/background_clip/) – 指定所有浏览器的背景剪辑。
+  - [后台源](http://compass-style.org/reference/compass/css3/background_origin/) – 指定所有浏览器的后台源。
+  - [背景大小](http://compass-style.org/reference/compass/css3/background_size/) – 指定所有浏览器的背景大小。
+  - [边框半径](http://compass-style.org/reference/compass/css3/border_radius/) – 指定所有浏览器的边框半径。
+  - [框阴影](http://compass-style.org/reference/compass/css3/box_shadow/) – 为所有浏览器指定框阴影。
+  - [框大小](http://compass-style.org/reference/compass/css3/box_sizing/) – 指定所有浏览器的框大小。
+  - [列](http://compass-style.org/reference/compass/css3/columns/) – 为所有浏览器指定列式布局。
+  - [筛选器](http://compass-style.org/reference/compass/css3/filter/) – 为所有浏览器指定（图像）筛选器。
+  - [Flexbox](http://compass-style.org/reference/compass/css3/flexbox/) – 此模块提供与 CSS3 Flexbox 相关的混音。
+  - [字体](http://compass-style.org/reference/compass/css3/font_face/) – 为所有浏览器指定可下载的字体。
+  - [连字](http://compass-style.org/reference/compass/css3/hyphenation/) – Mixin 用于破坏空格并将连字符注入溢出的文本中
+  - [图像](http://compass-style.org/reference/compass/css3/images/) – 为许多浏览器指定线性渐变和径向渐变。
+  - [内联块](http://compass-style.org/reference/compass/css3/inline_block/) – 为所有浏览器声明元素内联块。
+  - [不透明度](http://compass-style.org/reference/compass/css3/opacity/) – 指定所有浏览器的不透明度。
+  - [CSS 区域](http://compass-style.org/reference/compass/css3/regions/) – 为支持的浏览器指定 CSS 区域。
+  - [文本阴影](http://compass-style.org/reference/compass/css3/text-shadow/) – 指定所有浏览器的文本阴影。
+  - [转换](http://compass-style.org/reference/compass/css3/transform/) – 为许多浏览器指定转换。
+  - [过渡](http://compass-style.org/reference/compass/css3/transition/) – 为所有浏览器指定样式过渡。
+  - [用户界面](http://compass-style.org/reference/compass/css3/user_interface/) – 为所有浏览器声明元素内联块。
+### （1）圆角
+```javascript
+　　@import "compass/css3";
+
+　　.rounded {
+　　　　@include border-radius(5px);
+　　}
+
+---编译为
+
+　　.rounded {
+　　　　-moz-border-radius: 5px;
+　　　　-webkit-border-radius: 5px;
+　　　　-o-border-radius: 5px;
+　　　　-ms-border-radius: 5px;
+　　　　-khtml-border-radius: 5px;
+　　　　border-radius: 5px;
+　　}
+
+// 如果只需要左上角为圆角，写法为
+　　@include border-corner-radius(top, left, 5px);
+```
+### （2）透明
+```javascript
+　　@import "compass/css3";
+
+　　#opacity {
+　　　　@include opacity(0.5);
+　　}
+
+---编译为
+
+　　#opacity {
+　　　　filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0.5);	// 兼容 IE
+　　　　opacity: 0.5;
+　　}
+```
+### （3）行业区块
+```sass
+　　@import "compass/css3";
+
+　　#inline-block {
+　　　　@include inline-block;
+　　}
+
+---编译后生成
+
+　　#inline-block {
+　　　　display: -moz-inline-stack;
+　　　　display: inline-block;
+　　　　vertical-align: middle;
+　　　　*vertical-align: auto;
+　　　　zoom: 1;
+　　　　*display: inline;
+　　}
+```
+### 3）layout模块
+- 指定页面的[footer](http://compass-style.org/reference/compass/layout/sticky_footer/)部分总是出现在浏览器最底端
+  ```javascript
+  <body>
+    <div id="root">
+      <div id="root_footer"></div>
+    </div>
+    <div id="footer">
+      Footer content goes here.
+    </div>
+  </body>
+
+  @import "compass/layout";
+
+  #footer {
+  　　@include sticky-footer(54px);
+  }
+  ```
+- 指定子元素[占满](http://compass-style.org/reference/compass/layout/stretching/)父元素的空间
+  ```javascript
+  　　@import "compass/layout";
+
+  　　#stretch-full {
+  　　　　@include stretch;
+  　　}
+  ```
+### 4）typography模块
+- [链接](http://compass-style.org/reference/compass/typography/links/) – 用于设置锚点链接样式的工具。
+  - 指定[链接颜色](http://compass-style.org/reference/compass/typography/links/link_colors/)的mixin
+  ```javascript
+  　　link-colors($normal, $hover, $active, $visited, $focus);
+
+  ---使用时写成
+
+  　　@import "compass/typography";
+  　　a {
+  　　　　@include link-colors(#00c, #0cc, #c0c, #ccc, #cc0);
+  　　}
+  ```
+- [列表](http://compass-style.org/reference/compass/typography/lists/) – 用于设置列表样式的工具。
+- [文本](http://compass-style.org/reference/compass/typography/text/) – 文本的样式帮助程序。
+- [垂直节奏](http://compass-style.org/reference/compass/typography/vertical_rhythm/) – 为您的类型创建并保持垂直节奏。
+### 5）utilities模块
+- [该模块](http://compass-style.org/reference/compass/utilities/)提供某些不属于其他模块的功能。
+1. 清除浮动
+   ```javascript
+   　　import "compass/utilities/";
+
+   　　.clearfix {
+   　　　　@include clearfix;
+   　　}
+   ```
+2. 表格
+   ```javascript
+   　　@import "compass/utilities";
+
+   　　table {
+   　　　　@include table-scaffolding;
+   　　}
+
+   ---编译后生成
+
+   　　table th {
+   　　　　text-align: center;
+   　　　　font-weight: bold;
+   　　}
+
+   　　table td,
+   　　table th {
+   　　　　padding: 2px;
+   　　}
+
+   　　table td.numeric,
+   　　table th.numeric {
+   　　　　text-align: right;
+   　　}
+   ```
+
+
+
