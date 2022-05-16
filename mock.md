@@ -598,3 +598,54 @@ Random.cword('零一二三四五六七八九十', 5, 7)
 ## 7、Mock.toJSONSchema
 
 - 把 Mock.js 风格的数据模板 `template` 转换成 JSON
+
+# 二、总结
+
+1.  'name|min-max': string ，表示 str 随机重复的次数
+2.  'name|count': string ，表示 str 确定重复的次数
+3.  'name|min-max': number ，表示 num 取 min-max 的值
+4.  'name|min-max.dmin-dmax': number ，表示 num 取 min-max 的值，dnum 取随机位数
+5.  'name|min-max': boolean ，表示 bool 概率为 min / ( min + max )
+6.  'name|count': object ，表示随机取 obj 中确定个数的键值对属性
+7.  'name|1': array ，表示从 arr 中随机取确定个数的元素
+8.  'name|+1': array ，表示按数组下标顺序取元素
+9.  'name|min-max': array ，表示整个 arr 随机重复的次数
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
